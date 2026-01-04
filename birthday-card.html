@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>彤彤生日快乐! 🎉</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Microsoft YaHei', 'PingFang SC', 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .container {
+            text-align: center;
+            color: white;
+            padding: 20px;
+            position: relative;
+            z-index: 10;
+        }
+
+        .start-screen {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .start-screen h1 {
+            font-size: 3em;
+            margin-bottom: 30px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            animation: fadeInDown 1s;
+        }
+
+        .big-button {
+            background: white;
+            color: #667eea;
+            border: none;
+            padding: 25px 50px;
+            font-size: 1.5em;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+            font-weight: bold;
+            animation: pulse 2s infinite;
+        }
+
+        .big-button:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 12px 35px rgba(0,0,0,0.4);
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .main-content {
+            display: none;
+            min-height: 100vh;
+            padding: 50px 20px;
+        }
+
+        .main-content.active {
+            display: block;
+            animation: fadeIn 0.5s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .photo-section {
+            margin: 40px auto;
+            max-width: 600px;
+        }
+
+        .photo-display {
+            position: relative;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.4);
+            margin-bottom: 30px;
+            animation: zoomIn 0.5s;
+        }
+
+        @keyframes zoomIn {
+            from {
+                opacity: 0;
+                transform: scale(0.5);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .photo-display img {
+            width: 100%;
+            max-width: 500px;
+            border-radius: 20px;
+        }
+
+        .interactive-section {
+            margin: 50px auto;
+            max-width: 800px;
+        }
+
+        .wish-button {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            border: none;
+            padding: 20px 40px;
+            font-size: 1.3em;
+            border-radius: 50px;
+            cursor: pointer;
+            margin: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+            transition: all 0.3s;
+            font-weight: bold;
+        }
+
+        .wish-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.4);
+        }
+
+        .wish-display {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            padding: 30px;
+            margin: 30px auto;
+            max-width: 600px;
+            font-size: 1.3em;
+            line-height: 1.8;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+            min-height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .particle {
+            position: fixed;
+            pointer-events: none;
+            animation: float 3s ease-in-out;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-1000px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        .confetti {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            background: #f0f;
+            pointer-events: none;
+            animation: confettiFall 3s linear;
+        }
+
+        @keyframes confettiFall {
+            0% {
+                transform: translateY(-100px) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh) rotate(720deg);
+                opacity: 0;
+            }
+        }
+
+        .balloon {
+            font-size: 3em;
+            cursor: pointer;
+            display: inline-block;
+            margin: 20px;
+            transition: transform 0.3s;
+            animation: sway 3s ease-in-out infinite;
+        }
+
+        .balloon:hover {
+            transform: scale(1.3);
+        }
+
+        @keyframes sway {
+            0%, 100% { transform: translateX(0); }
+            50% { transform: translateX(20px); }
+        }
+
+        .balloon-section {
+            margin: 50px 0;
+        }
+
+        .message-box {
+            background: white;
+            color: #333;
+            border-radius: 20px;
+            padding: 30px;
+            margin: 30px auto;
+            max-width: 600px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+            text-align: left;
+        }
+
+        .message-box h2 {
+            color: #667eea;
+            margin-bottom: 20px;
+        }
+
+        .message-box p {
+            line-height: 1.8;
+            font-size: 1.1em;
+            color: #555;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="start-screen" id="startScreen">
+            <h1>🎉 彤彤的生日派对! 🎂</h1>
+            <button class="big-button" id="startBtn">点击开始!</button>
+        </div>
+
+        <div class="main-content" id="mainContent">
+            <h1 style="font-size: 3.5em; margin-bottom: 30px;">彤彤生日快乐! 🎊</h1>
+            
+            <div class="photo-section">
+                <div class="photo-display">
+                    <img id="uploadedPhoto" src="birthday.jpg" alt="生日照片">
+                </div>
+            </div>
+
+            <div class="interactive-section">
+                <h2 style="font-size: 2em; margin-bottom: 30px;">选择一个生日祝福! 🎁</h2>
+                <button class="wish-button" onclick="showWish(0)">祝福 #1</button>
+                <button class="wish-button" onclick="showWish(1)">祝福 #2</button>
+                <button class="wish-button" onclick="showWish(2)">祝福 #3</button>
+                <button class="wish-button" onclick="showWish(3)">给我惊喜!</button>
+                
+                <div class="wish-display" id="wishDisplay">
+                    点击上面的按钮查看祝福! ✨
+                </div>
+            </div>
+
+            <div class="balloon-section">
+                <h2 style="font-size: 2em; margin-bottom: 20px;">戳破气球! 🎈</h2>
+                <p style="margin-bottom: 20px; font-size: 1.2em;">点击每个气球会有惊喜哦!</p>
+                <div id="balloonContainer">
+                    <span class="balloon" onclick="popBalloon(this, 0)">🎈</span>
+                    <span class="balloon" onclick="popBalloon(this, 1)">🎈</span>
+                    <span class="balloon" onclick="popBalloon(this, 2)">🎈</span>
+                    <span class="balloon" onclick="popBalloon(this, 3)">🎈</span>
+                    <span class="balloon" onclick="popBalloon(this, 4)">🎈</span>
+                </div>
+            </div>
+
+            <div class="message-box">
+                <h2>给彤彤的特别留言 💌</h2>
+                <p>
+                    希望你的生日充满欢笑、快乐和所有让你开心的事情！
+                    愿新的一年里，你的每一天都阳光灿烂，所有的梦想都能实现！
+                    祝你度过最美好的一天，永远开心快乐! 🎉
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const wishes = [
+            "愿彤彤今年收获满满的快乐和成功! 🌟",
+            "祝彤彤每天都开开心心，笑口常开! 🎊",
+            "希望彤彤所有的梦想都能成真! ✨",
+            "愿彤彤健康快乐，天天都吃到美味的蛋糕! 🎂"
+        ];
+
+        const balloonMessages = [
+            "彤彤最棒! 🌟",
+            "永远闪耀! ✨",
+            "超级棒! 💫",
+            "继续加油! 🎯",
+            "你最酷! 🎸"
+        ];
+
+        document.getElementById('startBtn').addEventListener('click', () => {
+            document.getElementById('startScreen').style.display = 'none';
+            document.getElementById('mainContent').classList.add('active');
+            createConfetti();
+        });
+
+        function showWish(index) {
+            const wishDisplay = document.getElementById('wishDisplay');
+            const wish = index === 3 ? wishes[Math.floor(Math.random() * wishes.length)] : wishes[index];
+            wishDisplay.style.animation = 'none';
+            setTimeout(() => {
+                wishDisplay.textContent = wish;
+                wishDisplay.style.animation = 'zoomIn 0.5s';
+            }, 10);
+            createParticles(15, '✨');
+        }
+
+        function popBalloon(balloon, index) {
+            balloon.style.animation = 'none';
+            balloon.style.transform = 'scale(0)';
+            balloon.style.opacity = '0';
+            
+            setTimeout(() => {
+                balloon.textContent = balloonMessages[index];
+                balloon.style.fontSize = '1.5em';
+                balloon.style.transform = 'scale(1)';
+                balloon.style.opacity = '1';
+                balloon.style.animation = 'zoomIn 0.5s';
+            }, 300);
+            
+            createParticles(20, '🎉');
+        }
+
+        function createParticles(count, emoji) {
+            for (let i = 0; i < count; i++) {
+                setTimeout(() => {
+                    const particle = document.createElement('div');
+                    particle.className = 'particle';
+                    particle.textContent = emoji;
+                    particle.style.left = Math.random() * window.innerWidth + 'px';
+                    particle.style.top = window.innerHeight + 'px';
+                    particle.style.fontSize = (Math.random() * 20 + 20) + 'px';
+                    document.body.appendChild(particle);
+                    
+                    setTimeout(() => particle.remove(), 3000);
+                }, i * 50);
+            }
+        }
+
+        function createConfetti() {
+            const colors = ['#ff6b6b', '#feca57', '#48dbfb', '#ff9ff3', '#54a0ff', '#00d2d3'];
+            for (let i = 0; i < 50; i++) {
+                setTimeout(() => {
+                    const confetti = document.createElement('div');
+                    confetti.className = 'confetti';
+                    confetti.style.left = Math.random() * window.innerWidth + 'px';
+                    confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
+                    confetti.style.animationDelay = Math.random() * 2 + 's';
+                    document.body.appendChild(confetti);
+                    
+                    setTimeout(() => confetti.remove(), 3000);
+                }, i * 30);
+            }
+        }
+
+        document.addEventListener('click', (e) => {
+            if (e.target.tagName !== 'BUTTON' && e.target.className !== 'balloon') {
+                const sparkle = document.createElement('div');
+                sparkle.textContent = '✨';
+                sparkle.style.position = 'fixed';
+                sparkle.style.left = e.clientX + 'px';
+                sparkle.style.top = e.clientY + 'px';
+                sparkle.style.pointerEvents = 'none';
+                sparkle.style.animation = 'float 1s ease-out';
+                sparkle.style.fontSize = '24px';
+                document.body.appendChild(sparkle);
+                setTimeout(() => sparkle.remove(), 1000);
+            }
+        });
+    </script>
+</body>
+</html>
